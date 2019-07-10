@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringRunner.class)
-
 /**
  * cf) WebEnvironment.DEFINED_PORT 
  * -> By default, the embedded HTTP server will be started on a random port. As we
