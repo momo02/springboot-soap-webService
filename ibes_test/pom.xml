@@ -1,0 +1,156 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.hiair.hom</groupId>
+	<artifactId>ibes_test</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>ibes_test</name>
+	<url>http://www.hiair.com</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<maven.test.skip>true</maven.test.skip>
+		<cxf.version>3.2.1</cxf.version>
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.3.RELEASE</version>
+		<relativePath />
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ktds.kbilling</groupId>
+			<artifactId>kfrwk-web</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ktds.kbilling</groupId>
+			<artifactId>kcomn</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ktds.kbilling</groupId>
+			<artifactId>kfrwk</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			
+			 <!-- cxf-codegen-plugin -->
+			 <!-- CXF includes a Maven cxf-codegen-plugin plugin which can generate java artifacts from a WSDL file -->
+			 <!-- (CXF에는 WSDL 파일에서 Java 아티팩트를 생성 할 수있는 Maven cxf-codegen-plugin 플러그인이 포함되어 있음.) -->
+			 <!-- we’re running the 'wsdl2java' goal in the 'generate-sources' phase.  -->
+			 <!-- When executing following Maven command, CXF will generate artifacts in the '<sourceRoot>' directory that we have specified. -->
+		       <plugin>
+		        <groupId>org.apache.cxf</groupId>
+		        <artifactId>cxf-codegen-plugin</artifactId>
+		        <version>${cxf.version}</version>
+		        <executions>
+		          <execution>
+		            <id>generate-sources</id>
+		            <phase>generate-sources</phase>
+		            <configuration>
+		              <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
+		              <wsdlOptions>
+		                <wsdlOption>
+		                  <wsdl>${project.basedir}/src/main/resources/wsdl/sample.wsdl</wsdl>
+		                  <wsdlLocation>classpath:wsdl/sample.wsdl</wsdlLocation>
+		                </wsdlOption>
+		              </wsdlOptions>
+		            </configuration>
+		            <goals>
+		              <goal>wsdl2java</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		      </plugin> 
+			
+		</plugins>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+</project>
